@@ -10,8 +10,9 @@
 	int selfkey2=0;
 %>
 
-	<ul class="container">
-		<li>
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12">
 	  <% 
       	List<CommentBean> list = db.selectList(idboard);
       	for(CommentBean cc : list){
@@ -19,24 +20,20 @@
       	int selfkey= cc.get_selfkey();
       	if(selfkey != 0){
       		
-      		row ="row col-xs-10 a2 col-xs-offset-2";
+      		row ="col-xs-10  col-xs-offset-2";
       	}
 %>				
-				<div class="<%=row%>">
-        		<div class="col-xs-10 a2">
-        		<h5><%=cc.get_content()%></h5>
-        		</div>
-        		<div class="col-xs-5 a1">
-        		<h5><%=cc.get_time()%></h5></div>
-        		<div class="col-xs-3 a1">
-				<h5><%=cc.get_idmember()%></h5></div>
-				<div class="col-xs-4 a1">
-				<button type="button" id="show-re-insert_comment" value=<%=cc.get_idcomment()%> idcomment=<%=cc.get_idcomment()%> class="btn btn-xs btn-default btn-idcomment" >Insert comment</button>
-        		<c:set var="name3" value="<%=name3%>"/>
+				<c:set var="name3" value="<%=name3%>"/>
 				<c:set var="name4" value="<%=cc.get_idmember()%>"/>
-				<c:if test="${name3 eq name4}"><button type="button" id="btn-delete_comment" class="btn btn-xs btn-primary">Delete</button>
-				</c:if>
-				</div>
+				<div class="<%=row%>">
+					<table class="table table-striped">
+						<tr><td><%=cc.get_content()%></td></tr>
+						<tr><td><%=cc.get_time() %><p class="text-right"> <%=cc.get_idmember()%></p><button type="button" id="show-re-insert_comment" value=<%=cc.get_idcomment()%> idcomment=<%=cc.get_idcomment()%> class="btn btn-xs btn-default btn-idcomment" >Insert comment</button>
+						<c:if test="${name3 eq name4}"><button type="button" id="btn-delete_comment" class="btn btn-xs btn-primary">Delete</button></c:if>
+				</td></tr>
+	
+					</table>
+        		
 				<div class="col-xs-12 a2">
 					<div style="display:none" id="<%=cc.get_idcomment()%>" class="div-comment">
 						<textarea class="form-control"rows="3" name="reply" id="reply"
@@ -44,10 +41,9 @@
 					<button type="button" id="commit-2" value ="<%=cc.get_idcomment()%>"class="btn btn-xs btn-success">Commit</button></div>
 				</div>
 				</div>
-				</li>
-				
-				
-      </ul>
+				</div>
+		</div>
+		</div>
       <% }%>
 <script>
 /* $(document).on('click', '.btn-idcomment', function () {
