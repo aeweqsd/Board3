@@ -1,11 +1,15 @@
 package com.SpringStarter.example.domain;
 
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
+
 public class Paging {
 	private int maxnum;
 	private int totalpage;
-	private int endPage;
 	private int rows;
 	private int nowpage;
+	private int endPage;
 	private int pageScale =5;
 	public int getMaxnum() {
 		return maxnum;

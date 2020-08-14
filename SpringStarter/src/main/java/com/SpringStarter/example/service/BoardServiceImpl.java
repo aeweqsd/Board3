@@ -10,15 +10,20 @@ import com.SpringStarter.example.mapper.BoardMapper;
 
 @Service("BoardServiceImpl")
 public class BoardServiceImpl implements BoardService{
-	@Autowired BoardMapper boardMapper;
+	@Autowired BoardMapper boardmapper;
 	
 	@Override
 	public List<Board> selectBoardList(){
-		return boardMapper.selectBoardList();
+		return boardmapper.selectBoardList();
 		
 	}
 	@Override
 	public List<Board> showBoardList(){
-		return boardMapper.showBoardList();
+		return boardmapper.showBoardList();
+	}
+	@Override
+	public Board selectBoard(int boardnum) {
+		boardmapper.updateBoardhit(boardmapper.selectBoard(boardnum));
+		return boardmapper.selectBoard(boardnum);
 	}
 }

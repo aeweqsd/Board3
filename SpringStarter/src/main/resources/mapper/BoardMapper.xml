@@ -13,4 +13,15 @@
 		from 		board as a,(select @rownum:=7) tmp
 		order by 	rnum;
 	</select>
+	<select id="selectBoard" parameterType="int" resultType="Board">
+		Select *
+		from board
+		where idboard = #{boardnum};
+	</select>
+	<update id="updateBoardhit" parameterType="Board">
+		update		board
+		set			hit= #{hit}+1
+		where		idboard =#{idboard};
+		
+	</update>
 </mapper>
