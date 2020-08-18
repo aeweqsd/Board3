@@ -1,8 +1,4 @@
 <%@include file="header.jsp"%>
-<title>Insert title here</title>
-
-<body>
-
 	<div class="container">
 		<div class="row">
 			<div class="col-xs-1"></div>
@@ -48,3 +44,33 @@
 	
 </body>
 </html>
+<Script>
+$('#login').submit(function(e){
+	alert();
+	e.preventDefault();
+	var form =$(this);
+	var url = form.attr('login');
+	console.log(form.serialize());
+	$.ajax({
+		type:"get",
+		url:url,
+		data: {id:$(this).attr('id'),
+			   password:$(this).attr('password')},
+		dataType: json,
+		success:function(data){
+			console.log(data);
+		},
+		error:function(request,status,error){
+			console.log();
+			
+		}
+	});
+
+	
+});
+
+
+
+
+
+</Script>

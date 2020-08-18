@@ -1,10 +1,14 @@
 package com.SpringStarter.example.controller;
 
 import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.SpringStarter.example.domain.*;
@@ -16,7 +20,21 @@ public class Controller {
 	@Autowired BoardService boardservice;
 	@Autowired PagingService pagingservice;
 	@Autowired CommentService commentservice;
+	@Autowired MemberService memberservice;
 	
+	@RequestMapping("login")
+	public Member login(HttpServletRequest request){
+		Member info = new Member();
+		Member check = new Member();
+		info.setMemberid(request.getParameter("id"));
+		info.setPassword(request.getParameter("password"));
+		check=memberservice.selectmember(info);
+		if(check.getPassword().equals(info.getPassword())) {
+			return check;
+			
+		}
+		return info;
+	}
 	@RequestMapping("/")
 	public String home(Model model) {
 		
@@ -48,7 +66,7 @@ public class Controller {
 		return "/write";
 	}
 	@RequestMapping("show_comment")
-	public String show_comment(@RequestParam("idboard")String idboard,Model model) {
+	public String show_comment(@RequestParam(value = "idboard",required=true)String idboard,Model model) {
 		List<Comment> list = commentservice.selectcomment(Integer.parseInt(idboard));
 		model.addAttribute("list", list);
 		return "/comment";

@@ -1,7 +1,5 @@
 package com.SpringStarter.example.domain;
 
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
 
 
 public class Paging {

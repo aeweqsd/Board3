@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
         
 <mapper namespace="com.SpringStarter.example.mapper.CommentMapper">	
-	<select id="selectcomment" resultType="Board">
+	<select id="selectcomment" resultType="Comment">
 		Select *
 		from comment
 		where board_idboard= #{idboard};
