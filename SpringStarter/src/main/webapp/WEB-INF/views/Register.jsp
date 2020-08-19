@@ -25,7 +25,7 @@
 				 		<label for="birthday">birthday</label>
 					 		<div class="col-xs-12">
 						 		<div class="form-group col-xs-4" id="birth">
-						 			<input type="text" placeholder="year" name="birth_year" id="birth_year"class= "form-control">
+						 			<input type="text" placeholder="year" name="birth_year" id="birth_year"class= "form-control"required>
 						 		</div>
 						 		<div class="form-group col-xs-3 col-xs-offset-1">
 						 			<select class="form-control" id="birth_month" name="birth_month">
@@ -45,7 +45,7 @@
 						 			</select>
 						 		</div>
 						 		<div class="form-group col-xs-3 col-xs-offset-1" id="birth">
-						 			<input type="text" placeholder="day" name="birth_day" id="birth_day"class="form-control">
+						 			<input type="text" placeholder="day" name="birth_day" id="birth_day"class="form-control" required>
 						 		</div>
 					 		</div>
 				 		<div class="col-xs-12">
@@ -77,26 +77,32 @@
 	var password=$('#password').val();
 	var check_pass=$('#check-password').val();
 	var year=$('#birth_year').val();
+	var month =$('#birth_month').val();
 	var day=$('#birth_day').val();
 	var regExpyear = /^(19|20)\d{2}$/;
     var regExpday = /^(0[1-9]|[12][0-9]|3[0-1])$/;
-    /*  if(password != check_pass){
+    var regExpmonth= /^(0?[1-9]|1[0-2])$/;
+      if(password != check_pass){
         alert("plz check password")
          $('#check-password').val('');
         return;
     }
- 	if(regExpyear.test(year)){
+ 	if(!regExpyear.test(year)){
          alert("Year");
          $('#birth_year').val('');
          return;
    }
-   if(regExpday.test(day)){
+   if(!regExpday.test(day)){
          alert("day");
          $('#birth_day').val('');
          return;
-   }  */
-   $('#Create_member').submit();
-   window.close();
+   }
+   if(!regExpmonth.test(month)){
+       alert("month");
+       $('#birth_month').val('month');
+       return;
+ }  
+    $('#Create_member').submit();
     
 
 }); 
