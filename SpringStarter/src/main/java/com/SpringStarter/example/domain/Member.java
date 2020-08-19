@@ -4,6 +4,27 @@ public class Member {
 	private int idmember;
 	private String memberid;
 	private String password;
+	private String birthday;
+	private String name;
+	private String gender;
+	public String getBirthday() {
+		return birthday;
+	}
+	public void setBirthday(String birthday) {
+		this.birthday = birthday;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getgender() {
+		return gender;
+	}
+	public void setgender(String gender) {
+		this.gender = gender;
+	}
 	public int getIdmember() {
 		return idmember;
 	}

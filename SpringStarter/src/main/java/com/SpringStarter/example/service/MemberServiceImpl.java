@@ -15,5 +15,9 @@ public class MemberServiceImpl implements MemberService {
 	public Member selectmember(Member info) {
 		return membermapper.selectMember(info);
 	}
+	@Override
+	public void insertmember(Member info) {
+		membermapper.insertMember(info);
+	}
 
 }

@@ -71,4 +71,19 @@ public class Controller {
 		model.addAttribute("list", list);
 		return "/comment";
 	}
+	@RequestMapping("Register")
+	public String Register() {
+		return "/Register";
+	}
+	@RequestMapping("Create_member")
+	public void Create_member(HttpServletRequest request) {
+		Member info = new Member();
+		String Birthday = request.getParameter("birth_year")+request.getParameter("birth_month")+request.getParameter("birth_day");
+		info.setBirthday(Birthday);
+		info.setgender(request.getParameter("gender"));
+		info.setMemberid(request.getParameter("id"));
+		info.setName(request.getParameter("name"));
+		info.setPassword(request.getParameter("password"));
+		memberservice.insertmember(info);
+	}
 }

@@ -1,4 +1,4 @@
-<%@include file="header.jsp" %>
+<%@include file="Link.jsp" %>
 <body>
 	<div class="container">
 		<div class="row">
