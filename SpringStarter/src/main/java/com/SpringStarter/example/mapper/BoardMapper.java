@@ -10,4 +10,6 @@ public interface BoardMapper {
 	public List<Board> showBoardList();
 	public Board selectBoard(int boardnum);
 	public void updateBoardhit(Board board);
+	public void insertBoard(Board board);
+	public String updatetime();
 }

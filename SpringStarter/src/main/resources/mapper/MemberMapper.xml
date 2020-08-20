@@ -9,8 +9,14 @@
 		from member
 		where memberid = #{memberid};
 	</select>
+	<select id="overlapMember" resultType="int">
+		select count(*)
+		from member
+		where memberid = #{memberid};
+	</select>
 	<insert id="insertMember" parameterType="Member">
 		insert into member(memberid,password,name,birthday,gender)
 		values(#{memberid},#{password},#{name},#{birthday},#{gender});
 	</insert>
+	
 </mapper>

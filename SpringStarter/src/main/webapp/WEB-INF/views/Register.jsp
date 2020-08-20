@@ -5,11 +5,15 @@
 			<div class="col-xs-2"></div>
 			<div class="col-xs-8">
 				<div class="col-xs-12">
-				 	<form id="Create_member" action="/Create_member">
-				 		<label for="id">ID</label>
-						<div class="form-group">
-							<input type="text" placeholder="Email"name="id" id="id" class="form-control" required>				 	
-				 		</div>
+				 	<form id="Create_member" action="/Create_member" method='get'>
+				 		<div class="col-xs-12">
+					 		<label for="id">ID</label>
+							<div class="form-group">
+								<input type="text" placeholder="Email"name="id" id="id" class="form-control" required>				 	
+					 		</div>
+					 		<button type="button" class="btn btn-info" id="Check_overlap" >Check</button>
+					 		<div id="check"></div>
+					 	</div>
 				 		<label for="password">Password</label>
 				 		<div class="form-group">
 				 			<input type="password" placeholder="Password" name="password" id="password"class="form-control"required>
@@ -70,7 +74,6 @@
 <script>
  $('#Register_submit').on('click',function(){
 	
-	alert();
 	var form = $(this);
 	console.log(form.serialize());
 	var id =$('#id').val();
@@ -106,5 +109,32 @@
     
 
 }); 
+ $('#Check_overlap').on('click',function(){
+	$('#check_info').remove();
+	var id =$('#id').val();
+	$.ajax('Check_overlap',{
+		type:'get',
+		dataType:"json",
+		data:{
+			id:id
+			},
+		success:function(msg){
+			console.log(msg.overlap);
+			if(!msg.overlap){
+				$('#check').append('<div class="alert alert-success" id="check_info" role="alert">Possible</div>');
+			}else{
+				$('#check').append('<div class="alert alert-danger"id="check_info" role="alert">check id again</div>');
+			}
+			
+		},
+		error:function(request,status,error){
+		}
+			
+
+		});
+
+
+
+	 })
 
 </script>

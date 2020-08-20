@@ -19,5 +19,10 @@ public class MemberServiceImpl implements MemberService {
 	public void insertmember(Member info) {
 		membermapper.insertMember(info);
 	}
+	@Override
+	public int overlapMember(String id) {
+		return membermapper.overlapMember(id);
+		
+	}
 
 }

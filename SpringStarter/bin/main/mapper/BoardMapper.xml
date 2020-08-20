@@ -22,6 +22,12 @@
 		update		board
 		set			hit= #{hit}+1
 		where		idboard =#{idboard};
-		
 	</update>
+	<insert id="insertBoard" parameterType="Board">
+		insert into board(name,content,hit,time)
+		values(#{name},#{content},#{hit},#{time})
+	</insert>
+	<select id="updatetime" resultType="String">
+		select now();
+	</select>
 </mapper>

@@ -8,4 +8,5 @@ import com.SpringStarter.example.domain.Member;
 public interface MemberMapper {
 	public Member selectMember(Member info);
 	public void insertMember(Member info);
+	public int overlapMember(String id);
 }

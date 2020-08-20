@@ -5,7 +5,7 @@
 		<div class="col-xs-1"></div>
 			<div class="col-xs-10">
 				<form action="/writing"method ="get">
-					<input type="hidden" name="num" value="">
+					<input type="hidden" name="hit" value="0">
 					<input type="text" name="name" class="form-control mt-4 mb-2"
 						placeholder="Insert Name." required>
 					<div class="form-group">

@@ -26,4 +26,10 @@ public class BoardServiceImpl implements BoardService{
 		boardmapper.updateBoardhit(boardmapper.selectBoard(boardnum));
 		return boardmapper.selectBoard(boardnum);
 	}
+	@Override
+	public void insertBoard(Board board) {
+		String time =boardmapper.updatetime();
+		board.setTime(time);
+		boardmapper.insertBoard(board);
+	}
 }
