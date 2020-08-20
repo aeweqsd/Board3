@@ -15,10 +15,10 @@ import com.SpringStarter.example.mapper.PagingMapper;
 @Service("PagingServiceImpl")
 public class PagingServiceImpl implements PagingService{
 	@Autowired PagingMapper pagingmapper;
-	Paging paging = new Paging();
+	
 	
 	@Override
-	public Paging totalpage() { 
+	public Paging totalpage(Paging paging) { 
 		paging.setMaxnum(pagingmapper.totalpage());
 		int maxnum = paging.getMaxnum();
 			if(maxnum%paging.getPageScale()==0) {
@@ -31,7 +31,8 @@ public class PagingServiceImpl implements PagingService{
 	}
 
 	@Override
-	public Paging initpagservice() { 
+	public Paging initpagservice() {
+		Paging paging = new Paging();
 		paging.setNowpage(1);
 		paging.setMaxnum(pagingmapper.totalpage());
 		int maxnum = paging.getMaxnum();
@@ -44,17 +45,17 @@ public class PagingServiceImpl implements PagingService{
 	}
 	
 	@Override
-	public List<Board> selectBoardList(){ // 페이지에 해당하는 게시판 보여주기
+	public List<Board> selectBoardList(Paging paging){ // 페이지에 해당하는 게시판 보여주기
 		return pagingmapper.selectBoardList(paging);
 		
 	}
 	@Override
-	public int pagenumber() {
+	public int pagenumber(Paging paging) {
 		return paging.getTotalpage();
 		
 	}
 	@Override
-	public Paging changepage(int page) {
+	public Paging changepage(Paging paging,int page) {
 		paging.setNowpage(page);
 		return paging;
 	}

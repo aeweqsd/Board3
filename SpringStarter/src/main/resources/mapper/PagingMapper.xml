@@ -10,14 +10,14 @@
 	</select>
 	<select id="showBoardList" resultType="Board">
 		Select		@rownum:=@rownum-1 as rnum,a.*
-		from 		board as a,(select @rownum:=7) tmp
+		from 		board as a,(select @rownum:=#{maxnum}) tmp
 		order by 	rnum;
 	</select>
 	<select id="selectBoardList" parameterType="Paging" resultType="Board">
 		select *
 		from(
 				Select		@rownum:=@rownum-1 as rnum,a.*
-				from 		board as a,(select @rownum:=7) tmp
+				from 		board as a,(select @rownum:=#{maxnum}) tmp
 				order by 	rnum
 		)as b
 		where rnum between ((#{nowpage}-1)*#{pageScale})+1 and ((#{nowpage}-1)*#{pageScale})+#{pageScale}

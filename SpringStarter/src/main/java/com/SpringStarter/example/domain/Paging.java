@@ -1,8 +1,12 @@
 package com.SpringStarter.example.domain;
 
+import java.io.Serializable;
 
-
-public class Paging {
+public class Paging implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int maxnum;
 	private int totalpage;
 	private int rows;

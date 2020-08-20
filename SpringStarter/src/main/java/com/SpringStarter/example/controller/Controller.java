@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jackson.JsonObjectSerializer;
@@ -27,6 +28,8 @@ public class Controller {
 	@Autowired CommentService commentservice;
 	@Autowired MemberService memberservice;
 	@Autowired ObjectMapper objectmapper;
+	@Autowired private HttpSession httpsession;
+	
 	
 	@RequestMapping("login")
 	@ResponseBody
@@ -45,22 +48,26 @@ public class Controller {
 		return "";
 	}
 	@RequestMapping("/")
-	public String home(Model model) {
-		
-		pagingservice.initpagservice();
-		List<Board> list = pagingservice.selectBoardList();
+	public String home(Model model,HttpServletRequest req) {
+		Paging paging = new Paging();
+		paging = pagingservice.initpagservice();
+		List<Board> list = pagingservice.selectBoardList(paging);
+		httpsession.setAttribute("page",paging);
 		model.addAttribute("list",list);
-		System.out.println(pagingservice.pagenumber());
-		model.addAttribute("pagenumber", pagingservice.pagenumber());
+		model.addAttribute("pagenumber", pagingservice.pagenumber(paging));
 	
 		return "/board";
 	}
 	@RequestMapping("/board")
-	public String board(@RequestParam("pagenum") String pagenum,Model model) {
-		int page = Integer.parseInt(pagenum);
-		pagingservice.changepage(page);
-		List<Board> list=pagingservice.selectBoardList();
-		model.addAttribute("pagenumber", pagingservice.pagenumber());
+	public String board(@RequestParam(value = "pagenum", required=false) String pagenum, Model model ,HttpServletRequest req) {
+	//	int page = Integer.parseInt(pagenum);
+		int page= 1;
+		if(!pagenum.isEmpty()) {
+			page = Integer.parseInt(pagenum);
+		}
+		pagingservice.changepage((Paging)httpsession.getAttribute("page"),page);
+		List<Board> list=pagingservice.selectBoardList((Paging)httpsession.getAttribute("page"));
+		model.addAttribute("pagenumber", pagingservice.pagenumber((Paging)httpsession.getAttribute("page")));
 		model.addAttribute("list",list);
 		return "/board";
 	}
