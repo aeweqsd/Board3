@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 
 import com.SpringStarter.example.domain.*;
 import com.SpringStarter.example.mapper.BoardMapper;
@@ -22,52 +24,62 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @org.springframework.stereotype.Controller
+@SessionAttributes({"page","member"})
 public class Controller {
 	@Autowired BoardService boardservice;
 	@Autowired PagingService pagingservice;
 	@Autowired CommentService commentservice;
 	@Autowired MemberService memberservice;
 	@Autowired ObjectMapper objectmapper;
-	@Autowired private HttpSession httpsession;
 	
 	
 	@RequestMapping("login")
-	@ResponseBody
-	public String login(HttpServletRequest request) throws JsonProcessingException{
+	public String login(Model model,HttpServletRequest request) throws JsonProcessingException{
 		Member info = new Member();
 		Member check = new Member();
 	
 		info.setMemberid(request.getParameter("id"));
 		info.setPassword(request.getParameter("password"));
+		String a = objectmapper.writeValueAsString(info);
 		check=memberservice.selectmember(info);
 		if(check.getPassword().equals(info.getPassword())) {
-			String json = objectmapper.writeValueAsString(check);
-			return json;
+			model.addAttribute("member", info.getMemberid());
+			return "/board";
 			
 		}
 		return "";
 	}
+	@RequestMapping("logout")
+	public String logout(HttpSession session) {
+		Member info = new Member();
+		String id = (String) session.getAttribute("member");
+		info.setMemberid(id);
+		memberservice.logout(info);
+		session.invalidate();
+		return "/board";
+		
+	}
 	@RequestMapping("/")
-	public String home(Model model,HttpServletRequest req) {
+	public String home(Model model,HttpServletRequest req,HttpSession session) {
 		Paging paging = new Paging();
 		paging = pagingservice.initpagservice();
 		List<Board> list = pagingservice.selectBoardList(paging);
-		httpsession.setAttribute("page",paging);
+		model.addAttribute("page", paging);
 		model.addAttribute("list",list);
 		model.addAttribute("pagenumber", pagingservice.pagenumber(paging));
 	
 		return "/board";
 	}
 	@RequestMapping("/board")
-	public String board(@RequestParam(value = "pagenum", required=false) String pagenum, Model model ,HttpServletRequest req) {
-	//	int page = Integer.parseInt(pagenum);
+	public String board(@RequestParam(value = "pagenum", required=false) String pagenum, Model model) {
 		int page= 1;
-		if(!pagenum.isEmpty()) {
+		Paging paging  = (Paging)model.getAttribute("page");
+		if(!(pagenum ==null)) {
 			page = Integer.parseInt(pagenum);
 		}
-		pagingservice.changepage((Paging)httpsession.getAttribute("page"),page);
-		List<Board> list=pagingservice.selectBoardList((Paging)httpsession.getAttribute("page"));
-		model.addAttribute("pagenumber", pagingservice.pagenumber((Paging)httpsession.getAttribute("page")));
+		pagingservice.changepage(paging,page);
+		List<Board> list=pagingservice.selectBoardList(paging);
+		model.addAttribute("pagenumber", paging.getTotalpage());
 		model.addAttribute("list",list);
 		return "/board";
 	}

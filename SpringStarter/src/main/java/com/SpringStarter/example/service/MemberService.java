@@ -8,4 +8,5 @@ public interface MemberService {
 	public Member selectmember(Member info);
 	public void insertmember(Member info);
 	public int overlapMember(String id);
+	public void logout(Member info);
 }

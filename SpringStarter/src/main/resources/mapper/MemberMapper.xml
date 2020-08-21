@@ -18,5 +18,14 @@
 		insert into member(memberid,password,name,birthday,gender)
 		values(#{memberid},#{password},#{name},#{birthday},#{gender});
 	</insert>
-	
+	<update id="login" parameterType="Member">
+		update member
+		set is_login = 1
+		where memberid = #{memberid};
+	</update>
+	<update id="logout" parameterType="Member">
+		update member
+		set is_login = 0
+		where memberid = #{memberid};
+	</update>
 </mapper>

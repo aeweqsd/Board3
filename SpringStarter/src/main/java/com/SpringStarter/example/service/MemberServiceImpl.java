@@ -13,6 +13,7 @@ public class MemberServiceImpl implements MemberService {
 	@Autowired MemberMapper membermapper;
 	@Override
 	public Member selectmember(Member info) {
+		membermapper.login(info);
 		return membermapper.selectMember(info);
 	}
 	@Override
@@ -24,5 +25,8 @@ public class MemberServiceImpl implements MemberService {
 		return membermapper.overlapMember(id);
 		
 	}
-
+	@Override
+	public void logout(Member info) {
+		membermapper.logout(info);
+	}
 }

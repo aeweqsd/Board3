@@ -7,6 +7,13 @@ public class Member {
 	private String birthday;
 	private String name;
 	private String gender;
+	private boolean islogin;
+	public boolean isIslogin() {
+		return islogin;
+	}
+	public void setIslogin(boolean islogin) {
+		this.islogin = islogin;
+	}
 	public String getBirthday() {
 		return birthday;
 	}

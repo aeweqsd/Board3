@@ -55,9 +55,9 @@ public class PagingServiceImpl implements PagingService{
 		
 	}
 	@Override
-	public Paging changepage(Paging paging,int page) {
+	public void changepage(Paging paging,int page) {
 		paging.setNowpage(page);
-		return paging;
+		
 	}
 	
 }
