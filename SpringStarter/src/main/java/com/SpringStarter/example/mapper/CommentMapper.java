@@ -7,4 +7,6 @@ import com.SpringStarter.example.domain.Comment;
 @Mapper
 public interface CommentMapper {
 	public List<Comment> selectcomment(int idboard);
+	public void insertcomment(Comment comment);
+	public String updatetime();
 }

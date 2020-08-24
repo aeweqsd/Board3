@@ -28,4 +28,10 @@
 		set is_login = 0
 		where memberid = #{memberid};
 	</update>
+	<select id="getmemberid" resultType="int">
+		select idmember
+		from member
+		where memberid = #{memberid};
+	</select>
+
 </mapper>

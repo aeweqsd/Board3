@@ -11,4 +11,5 @@ import com.SpringStarter.example.mapper.CommentMapper;
 
 public interface CommentService {
 	public List<Comment> selectcomment(int idboard);
+	public void insertcomment(Comment comment);
 }

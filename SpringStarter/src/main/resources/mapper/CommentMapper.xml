@@ -5,8 +5,29 @@
         
 <mapper namespace="com.SpringStarter.example.mapper.CommentMapper">	
 	<select id="selectcomment" resultType="Comment">
-		Select *
-		from comment
-		where board_idboard= #{idboard};
+		select		tb.*
+from		(
+			select		*
+            from		comment ta
+            where		1=1
+            and			ta.selfkey = 0
+			) ta
+left join	(           
+			select 		*
+			from 		comment ta
+            where		1=1
+            ) tb on ta.idcomment = tb.idcomment or ta.idcomment = tb.selfkey
+where 		ta.board_idboard = #{idboard}
+order by 	ta.idcomment desc, tb.selfkey asc
+;
+	</select>
+	
+	<insert id="insertcomment" parameterType="Comment">
+		insert into comment(content,selfkey,time,board_idboard,idmember)
+		values(#{content},#{selfkey},#{time},#{board_idboard},#{idmember})
+	
+	</insert>
+	<select id="updatetime" resultType="String">
+		select now();
 	</select>
 </mapper>

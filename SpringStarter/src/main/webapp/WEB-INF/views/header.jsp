@@ -28,6 +28,8 @@
 </body>
 <Script>
 
+var user ='${user}'
+
 $(document).ready(function(){
 	var user = '${user}';
 	if(user){
@@ -44,12 +46,14 @@ $('#login_submit').on('click',function(e){
 	var password =$('#password').val();
 	$.ajax('login',{
 		type:"get",
-		dataType: "html",
+		dataType: "json",
 		data: {id: id,
 			   password: password
 		},
 		success:function(data){
-			location.reload(data);
+			$('#qwe').css('display','block');
+			$('#login').css('display','none');
+			$('#qwer').append(id);
 		},
 		error:function(request,status,error){
 			console.log();
@@ -65,8 +69,8 @@ $('#logout_submit').on('click', function(){
 		data: {id: '${user}'
 		},
 		success:function(data){
-			//console.log(data);
-			location.reload(data);		
+			console.log(data);
+			location.reload(data);
 			
 		},
 		error:function(request,status,error){

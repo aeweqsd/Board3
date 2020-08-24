@@ -34,29 +34,30 @@ public class Controller {
 	
 	
 	@RequestMapping("login")
+	@ResponseBody
 	public String login(Model model,HttpServletRequest request) throws JsonProcessingException{
 		Member info = new Member();
 		Member check = new Member();
-	
 		info.setMemberid(request.getParameter("id"));
 		info.setPassword(request.getParameter("password"));
 		String a = objectmapper.writeValueAsString(info);
 		check=memberservice.selectmember(info);
 		if(check.getPassword().equals(info.getPassword())) {
 			model.addAttribute("member", info.getMemberid());
-			return "/board";
-			
+			return a;
 		}
 		return "";
+		
 	}
 	@RequestMapping("logout")
-	public String logout(HttpSession session) {
+	@ResponseBody
+	public String logout(Model model,HttpServletRequest request,HttpSession session) {
 		Member info = new Member();
 		String id = (String) session.getAttribute("member");
 		info.setMemberid(id);
 		memberservice.logout(info);
 		session.invalidate();
-		return "/board";
+		return "";
 		
 	}
 	@RequestMapping("/")
@@ -71,9 +72,10 @@ public class Controller {
 		return "/board";
 	}
 	@RequestMapping("/board")
-	public String board(@RequestParam(value = "pagenum", required=false) String pagenum, Model model) {
+	public String board(@RequestParam(value = "pagenum", required=false) String pagenum, Model model,HttpSession session) {
+		Paging paging = (Paging)session.getAttribute("page");
+		paging = pagingservice.initpagservice();
 		int page= 1;
-		Paging paging  = (Paging)model.getAttribute("page");
 		if(!(pagenum ==null)) {
 			page = Integer.parseInt(pagenum);
 		}
@@ -94,12 +96,20 @@ public class Controller {
 		return "/write";
 	}
 	@RequestMapping("writing")
-	public String insertboard(HttpServletRequest request) {
+	public String insertboard(HttpServletRequest request,HttpSession session,Model model) {
 		Board board = new Board();
+		String id = (String)session.getAttribute("member");
+		Paging paging = (Paging)session.getAttribute("page");
+		int a =memberservice.getmemberid(id);
+		board.setIdmember(a);
 		board.setName(request.getParameter("name"));
 		board.setContent(request.getParameter("content"));
 		board.setHit(Integer.parseInt(request.getParameter("hit")));
 		boardservice.insertBoard(board);
+		paging = pagingservice.initpagservice();
+		List<Board> list=pagingservice.selectBoardList(paging);
+		model.addAttribute("pagenumber", paging.getTotalpage());
+		model.addAttribute("list",list);
 		return "/board";
 	}
 	@RequestMapping("show_comment")
@@ -124,7 +134,26 @@ public class Controller {
 		memberservice.insertmember(info);
 		return "/Success";
 	}
-	
+	@RequestMapping("insert_comment")
+	public String insert_comment(@RequestParam(value = "id",required=true)String idboard,
+			@RequestParam(value = "writer",required=true)String writer,
+			@RequestParam(value = "content",required=true)String content,
+			@RequestParam(value ="selfkey",required=false)String selfkey,
+			Model model) {
+		Comment info = new Comment();
+		info.setBoard_idboard(Integer.parseInt(idboard));
+		info.setContent(content);
+		info.setIdmember(memberservice.getmemberid(writer));
+		if(selfkey !=null) {
+			info.setSelfkey(Integer.parseInt(selfkey));
+		}else {
+			info.setSelfkey(0);
+		}
+		commentservice.insertcomment(info);
+		List<Comment> list = commentservice.selectcomment(Integer.parseInt(idboard));
+		model.addAttribute("list", list);
+		return "/comment";
+	}
 	
 
 	@RequestMapping("Check_overlap") 

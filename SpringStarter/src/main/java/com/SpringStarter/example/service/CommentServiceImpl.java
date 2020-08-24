@@ -17,4 +17,9 @@ public class CommentServiceImpl implements CommentService {
 		
 		
 	}
+	@Override
+	public void insertcomment(Comment comment) {
+		comment.setTime(commentmapper.updatetime());
+		commentmapper.insertcomment(comment);
+	}
 }

@@ -29,4 +29,9 @@ public class MemberServiceImpl implements MemberService {
 	public void logout(Member info) {
 		membermapper.logout(info);
 	}
+	@Override
+	public int getmemberid(String memberid) {
+		return membermapper.getmemberid(memberid);
+		
+	}
 }

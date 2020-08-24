@@ -11,4 +11,5 @@ public interface MemberMapper {
 	public int overlapMember(String id);
 	public void login(Member info);
 	public void logout(Member info);
+	public int getmemberid(String id);
 }

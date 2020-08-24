@@ -9,4 +9,5 @@ public interface MemberService {
 	public void insertmember(Member info);
 	public int overlapMember(String id);
 	public void logout(Member info);
+	public int getmemberid(String memberid);
 }

@@ -24,8 +24,8 @@
 		where		idboard =#{idboard};
 	</update>
 	<insert id="insertBoard" parameterType="Board">
-		insert into board(name,content,hit,time)
-		values(#{name},#{content},#{hit},#{time})
+		insert into board(name,content,hit,time,idmember)
+		values(#{name},#{content},#{hit},#{time},#{idmember})
 	</insert>
 	<select id="updatetime" resultType="String">
 		select now();

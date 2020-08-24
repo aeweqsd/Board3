@@ -65,10 +65,59 @@ $(document).ready(function(){
 
 	
 });
+});
+$('#commit').on('click',function(e){
+	var content =$('#content').val();
+	var id = ${board.idboard};
+	var writer = '${user}';
+	$.ajax('insert_comment',{
+		type:"get",
+		dataType: "html",
+		data: {id: id,
+			   writer:writer,
+			   content:content
+		},
+		success:function(html){
+			$("#comment").html(html);
+			$('#content').val('');
+			alert("Complete!")
+		},
+		error:function(request,status,error){
+			console.log();
+			
+		}
+	});
 })
+
+$(document).on('click','.btn-commit',function(){
+	var idcomment= $(this).attr('idcomment');
+	var content =$('#'+idcomment+'>textarea').val();
+	console.log(content);
+	var id = ${board.idboard};
+	var writer = '${user}';
+	var selfkey = $('.btn-commit').attr('idcomment');
+	$.ajax('insert_comment',{
+		type:"get",
+		dataType: "html",
+		data: {id: id,
+			   writer: writer,
+			   content: content,
+			   selfkey : selfkey
+		},
+		success:function(html){
+			$("#comment").html(html);
+			$('#'+idcomment+'>textarea').val('');
+			alert("Complete2!")
+		},
+		error:function(request,status,error){
+			console.log();
+			
+		}
+	});
+})
+
 $(document).on('click', '.btn-idcomment', function () {
 	var id = $(this).attr('idcomment');
-	console.log($('#'+id).css('display'));
 	$('#'+id).toggle();
 	//$('#'+id).show(500);
 	//$('#'+id).hide(500);
