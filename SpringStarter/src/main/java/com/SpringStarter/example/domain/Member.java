@@ -8,6 +8,13 @@ public class Member {
 	private String name;
 	private String gender;
 	private boolean islogin;
+	private int message;
+	public int getMessage() {
+		return message;
+	}
+	public void setMessage(int message) {
+		this.message = message;
+	}
 	public boolean isIslogin() {
 		return islogin;
 	}

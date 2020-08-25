@@ -24,14 +24,14 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @org.springframework.stereotype.Controller
-@SessionAttributes({"page","member"})
+@SessionAttributes({"page","member","message"})
 public class Controller {
 	@Autowired BoardService boardservice;
 	@Autowired PagingService pagingservice;
 	@Autowired CommentService commentservice;
 	@Autowired MemberService memberservice;
 	@Autowired ObjectMapper objectmapper;
-	
+	@Autowired MessageService messageservice;
 	
 	@RequestMapping("login")
 	@ResponseBody
@@ -44,6 +44,7 @@ public class Controller {
 		check=memberservice.selectmember(info);
 		if(check.getPassword().equals(info.getPassword())) {
 			model.addAttribute("member", info.getMemberid());
+			model.addAttribute("message", check.getMessage());
 			return a;
 		}
 		return "";
@@ -121,6 +122,33 @@ public class Controller {
 	@RequestMapping("Register")
 	public String Register() {
 		return "/Register";
+	}
+	@RequestMapping("memberinfo")
+	public String memberinfo(@RequestParam(value = "idmember",required=true)String idmember,Model model) {
+		Member info = new Member();
+		Member info2 = new Member();
+		info.setIdmember(Integer.parseInt(idmember));
+		info2 = memberservice.memberinfo(info);
+		model.addAttribute("info", info2);
+		return "/memberinfo";
+	}
+	@RequestMapping("SendMessage")
+	public String Send_Message(@RequestParam(value = "receiver",required=true)String receiver,
+							   @RequestParam(value = "sender",required=true)String sender,
+							   Model model) {
+		Member info = new Member();
+		info.setIdmember(Integer.parseInt(receiver));
+		info = memberservice.memberinfo(info);
+		model.addAttribute("info",info);
+		model.addAttribute("sender", sender);
+		return "/SendMessage";
+		
+	}
+	@RequestMapping("sending")
+	public String sending(Message message) {
+		message.setIs_read(false);
+		messageservice.insertmessage(message);
+		return "/Success";
 	}
 	@RequestMapping("Create_member")
 	public String Create_member(HttpServletRequest request) {

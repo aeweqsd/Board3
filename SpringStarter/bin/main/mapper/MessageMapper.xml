@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+        
+<mapper namespace="com.SpringStarter.example.mapper.MessageMapper">
+	<insert id="insertmessage" parameterType="Message">
+		insert into message(sender,receiver,content,name,is_read)
+		value(#{sender},#{receiver},#{content},#{name},#{is_read});
+	</insert>
+</mapper>

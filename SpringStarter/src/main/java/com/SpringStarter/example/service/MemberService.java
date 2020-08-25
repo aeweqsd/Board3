@@ -10,4 +10,5 @@ public interface MemberService {
 	public int overlapMember(String id);
 	public void logout(Member info);
 	public int getmemberid(String memberid);
+	public Member memberinfo(Member info);
 }

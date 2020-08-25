@@ -11,7 +11,7 @@
 		        				<td>number ${board.idboard}</td></tr>
 		        				<tr><td>name      ${board.name}</td></tr>
 		        				<tr><td>content     ${board.content}</td></tr>
-		        				<tr><td>writer    ${board.idmember}</td></tr>
+		        				<tr><td>writer   <a href="#" id="showbox" class="showclass"> ${board.idmember}</a></td></tr>
 								<tr><td>time  		${board.time}</td></tr>
 								<tr><td>hit 		${board.hit}</td></tr>
 						</table>
@@ -41,9 +41,69 @@
 				<div class="col-xs-1"></div>
 		</div>
 </div>
+<div class="dropdown" style="display:none" id="show">
+	<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown"aria-expanded="true">
+		show</button>
+			<ul class="dropdown-menu"role="menu"  aria-labelledby="dropdownMenu2">
+				<li role="presentation"><a role="menuitem" tabindex="-1" id="Memberinfo">MemberInfo</a></li>
+				<li role="presentation"><a role="menuitem" tabindex="-1" id="Send_Message">send a message</a></li>
+			</ul>
+</div>
 <%@include file ="Footer.jsp"%>
   
 <script>
+$('#Memberinfo').on('click',function(){
+	var idmember =${board.idmember};
+	window.open('memberinfo?idmember='+idmember,'memberinfo',"width=800 height=600");
+});
+
+$('#Send_Message').on('click',function(){
+	var receiver = ${board.idmember};
+	var sender = '${user}';
+	window.open('SendMessage?receiver='+receiver+'&&sender='+sender,'SendMessage',"width=800 height=600");	
+});
+
+$(document).on('click', '.showclass', function (event) {
+	var cursorX = event.clientX;
+	var cursorY = event.clientY;
+
+	var a = document.getElementById('show');
+	a.style.display ='block';
+	a.style.position = "absolute";
+	a.style.left=cursorX+'px';
+	a.style.top=cursorY+'px';
+});
+
+ $(document).on('click', 'body', function (event) {
+	if(!($(event.target).hasClass('showclass'))) {
+		var cursorX = event.clientX;
+		var cursorY = event.clientY;
+		console.log(cursorX);
+		console.log(cursorY);
+		var a = document.getElementById('show');
+		a.style.display ='none';
+		a.style.position = "absolute";
+		a.style.left=cursorX+'px';
+		a.style.top=cursorY+'px';
+	}
+});
+ 
+
+/* document.addEventListener('click',function(){
+document.addEventListener('mousemove', show, false);
+function show(event){
+	
+	var cursorX = event.clientX;
+	var cursorY = event.clientY;
+	console.log(cursorX);
+	console.log(cursorY);
+	var a = document.getElementById('show');
+	a.style.display ='block';
+	a.style.position = "absolute";
+	a.style.left=cursorX+'px';
+	a.style.top=cursorY+'px';
+}
+}); */
 $(document).ready(function(){
 
 

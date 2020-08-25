@@ -1,5 +1,6 @@
 <%@include file="Link.jsp" %>
 <body>
+<c:set var="message" value="${sessionScope.message}"/>
 	<nav class="navbar navbar-inverse navbar-fixed top">
 		<div class="container">
 			<div class="navbar-header">
@@ -19,12 +20,14 @@
 						
 						<div id="qwe" class="navbar-right" style="display:none">
 							<p class="navbar-text" id="qwer">WELCOME!  </p>
+							<button type="button" id="bring_note" class="btn btn-primary">Messages <span class="badge">${sessionScope.message}</span></button>
 							<button type="button" id="logout_submit" class="btn btn-default">Log_out</button>
 						</div>
 			</div>
 			</div>
 	</nav>
 	<c:set var="user" value="${sessionScope.member}"/>
+	
 </body>
 <Script>
 

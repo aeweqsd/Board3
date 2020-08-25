@@ -12,4 +12,6 @@ public interface MemberMapper {
 	public void login(Member info);
 	public void logout(Member info);
 	public int getmemberid(String id);
+	public Member memberinfo(Member info);
+	public void sendmessage(String id);
 }

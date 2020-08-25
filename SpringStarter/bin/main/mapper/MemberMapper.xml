@@ -33,5 +33,14 @@
 		from member
 		where memberid = #{memberid};
 	</select>
-
+	<select id="memberinfo" parameterType="Member" resultType="Member">
+		select *
+		from member
+		where idmember = #{idmember};
+	</select>
+	<update id="sendmessage">
+		update member
+		set message= message+1
+		where memberid = #{memberid};
+	</update>
 </mapper>

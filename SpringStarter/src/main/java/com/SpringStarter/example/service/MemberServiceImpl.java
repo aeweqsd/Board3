@@ -32,6 +32,9 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public int getmemberid(String memberid) {
 		return membermapper.getmemberid(memberid);
-		
+	}
+	@Override
+	public Member memberinfo(Member info) {
+		return membermapper.memberinfo(info);
 	}
 }
